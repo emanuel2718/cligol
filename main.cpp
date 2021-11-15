@@ -1,7 +1,9 @@
 #include <iostream>
+#include <string>
 #include <ncurses.h>
 
 #include "util.hpp"
+#include "gameoflife.hpp"
 
 using namespace std;
 
@@ -9,6 +11,7 @@ using namespace std;
 void run() {
     int ascii_code = 0;
     bool show_menu = true;
+    string map;
     while (show_menu) {
         print_menu();
         ascii_code = getch();
@@ -18,16 +21,13 @@ void run() {
             case 109: show_menu = false; break; // m   --> go to main menu
             //case 48 ... 55: case 97 ... 102: // [0, 9] or [a, f]
             case 48 ... 50: // [0, 2] for now
-                if (load_map(ascii_code))
-                    mvprintw(8, 0,"Starting simulation");
-                else
-                    mvprintw(1, 1,"Failed to start simulation");
+                clear();
+                start_simulation(get_filename(ascii_code));
                 refresh();
                 break;
-            default:  break;
+            default: break;
         }
     }
-
 }
 
 int main(int argc, char* argv[]) {
