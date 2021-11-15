@@ -1,5 +1,5 @@
 all: main.cpp
-	g++ main.cpp -o cligol -Werror -Wall -lncurses
+	g++ main.cpp util.cpp -o cligol -Werror -Wall -lncurses
 
 
 clean:
