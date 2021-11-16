@@ -7,21 +7,34 @@
 #include "util.hpp"
 
 
-void start_simulation(std::string map) {
-    GameOfLife game;
-    game.set_map(map);
-    game.populate_board(game.get_board(), map);
-    while (getch() != 27) {
+
+void GameOfLife::start_simulation(std::string map) {
+    set_map(map);
+    populate_board();
+    bool running = true;
+    //int ascii_code = 0;
+    nodelay(stdscr, TRUE);
+    while (running) {
         clear();
         refresh();
-        game.print_board(game.get_board());
+        print_board();
+        update_board();
         refresh();
+        timeout(50);
 
+        if (getch() == 27) { // ESC
+            running = false;
+        }
+        else if (getch() == 98) { // b to go back
+            running = false;
+            run();
+            return;
+        }
     }
 }
 
 // TODO(emanuel): print centered somehow?
-void GameOfLife::print_board(std::vector<std::vector<char>>& board) {
+void GameOfLife::print_board() {
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {
             mvaddch(i, j, board[i][j]);
@@ -30,12 +43,48 @@ void GameOfLife::print_board(std::vector<std::vector<char>>& board) {
 }
 
 
-void GameOfLife::populate_board(std::vector<std::vector<char>>& board, std::string map) {
+void GameOfLife::populate_board() {
     std::ifstream file;
     file.open(map);
     if (!file) return;
-    for (int i = 0; i < COLUMNS; ++i) {
+    for (int i = 0; i < COLUMNS; ++i)
         for (int j = 0; j < ROWS; ++j)
             file >> board[i][j];
     return;
+}
+
+
+void GameOfLife::update_board() {
+    int rand_col = get_random_col();
+    int rand_row = get_random_row();
+    if (board[rand_col][rand_row] == LIVE_CELL)
+        board[rand_col][rand_row] = 'F';
+    else
+        board[rand_col][rand_row] = '*';
+
+}
+
+void run() {
+    clear();
+    int ascii_code = 0;
+    bool show_menu = true;
+    std::string map;
+    GameOfLife game;
+    while (show_menu) {
+        print_menu();
+        ascii_code = getch();
+        switch (ascii_code) {
+            case 27:  show_menu = false; break; // ESC --> quit
+            case 113: show_menu = false; break; // q   --> quit
+            case 109: show_menu = false; break; // m   --> go to main menu
+            //case 48 ... 55: case 97 ... 102: // [0, 9] or [a, f]
+            case 48 ... 50: // [0, 2] for now
+                clear();
+                map = get_filename(ascii_code);
+                game.start_simulation(map);
+                refresh();
+                break;
+            default: break;
+        }
+    }
 }

@@ -18,8 +18,13 @@ class GameOfLife {
         std::string get_map() { return map; }
         std::vector<std::vector<char>>& get_board() { return board; }
 
-        void print_board(std::vector<std::vector<char>>& vec);
-        void populate_board(std::vector<std::vector<char>>& vec, std::string map);
+        void start_simulation(std::string map);
+        //void start_simulation(std::string map);
+        //void print_board(std::vector<std::vector<char>>& vec);
+        //void populate_board(std::vector<std::vector<char>>& vec, std::string map);
+        void print_board();
+        void populate_board();
+        void update_board();
 
     private:
         static const char LIVE_CELL = 'X';
@@ -28,7 +33,7 @@ class GameOfLife {
         std::vector<std::vector<char>> board;
 };
 
-void start_simulation(std::string map);
 
+void run();
 
 #endif // GAMEOFLIFE_H_

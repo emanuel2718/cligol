@@ -1,6 +1,7 @@
 #include <fstream>
 #include <ncurses.h>
 #include <string>
+#include <random>
 
 #include "util.hpp"
 
@@ -31,4 +32,20 @@ std::string get_filename(int option) {
         default: break;
     }
     return MAPS[index];
+}
+
+int get_random_col() {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, COLUMNS-1);
+    return dist6(rng);
+
+}
+
+int get_random_row() {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, ROWS-1);
+    return dist6(rng);
+
 }

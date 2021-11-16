@@ -37,6 +37,8 @@ static const std::vector<Line> main_menu_msg = {
     {16, -1, "2. Spaceship map"}
 };
 
+int get_random_col();
+int get_random_row();
 int get_width();
 int get_height();
 void print_menu();
