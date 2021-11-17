@@ -27,6 +27,7 @@ void GameOfLife::start_simulation(std::string map) {
         }
         else if (getch() == 98) { // b to go back
             running = false;
+            // Are we leaking memory?
             run();
             return;
         }
@@ -64,12 +65,10 @@ void GameOfLife::update_board() {
 
 }
 
-void run() {
+void GameOfLife::run() {
     clear();
     int ascii_code = 0;
     bool show_menu = true;
-    std::string map;
-    GameOfLife game;
     while (show_menu) {
         print_menu();
         ascii_code = getch();
@@ -81,8 +80,7 @@ void run() {
             case 48 ... 50: // [0, 2] for now
                 clear();
                 map = get_filename(ascii_code);
-                game.start_simulation(map);
-                refresh();
+                start_simulation(map);
                 break;
             default: break;
         }

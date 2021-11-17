@@ -11,7 +11,6 @@
 
 class GameOfLife {
     public:
-        //GameOfLife() : board(get_width()-4, std::vector<char> (get_height(), '.')) {}
         GameOfLife() : board(COLUMNS, std::vector<char> (ROWS, '.')) {}
 
         void set_map(std::string m) { map = m; }
@@ -19,12 +18,10 @@ class GameOfLife {
         std::vector<std::vector<char>>& get_board() { return board; }
 
         void start_simulation(std::string map);
-        //void start_simulation(std::string map);
-        //void print_board(std::vector<std::vector<char>>& vec);
-        //void populate_board(std::vector<std::vector<char>>& vec, std::string map);
         void print_board();
         void populate_board();
         void update_board();
+        void run();
 
     private:
         static const char LIVE_CELL = 'X';
@@ -34,6 +31,5 @@ class GameOfLife {
 };
 
 
-void run();
 
 #endif // GAMEOFLIFE_H_

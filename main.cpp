@@ -43,7 +43,8 @@ int main(int argc, char* argv[]) {
     //show_main_menu();
     //GameOfLife game;
     //game.run();
-    run();
+    GameOfLife game;
+    game.run();
 
     endwin();
     clear();
