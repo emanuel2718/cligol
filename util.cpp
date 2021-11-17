@@ -5,8 +5,8 @@
 
 #include "util.hpp"
 
-int get_width() { return LINES; }
-int get_height() { return COLS; }
+int get_height() { return LINES; }
+int get_width() { return COLS; }
 
 void print_centered(int y, int x, const char* str, int pad) {
     mvprintw(y/2, (x-strlen(str))/2 + pad, str);
@@ -14,7 +14,7 @@ void print_centered(int y, int x, const char* str, int pad) {
 
 void print_menu() {
     for (auto& line : main_menu_msg) {
-        print_centered(get_width()+line.mod, get_height(), line.message, line.pad);
+        print_centered(get_height()+line.mod, get_width(), line.message, line.pad);
     }
 }
 
