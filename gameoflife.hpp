@@ -17,7 +17,7 @@ class GameOfLife {
         std::string get_map() { return map; }
         std::vector<std::vector<char>>& get_board() { return board; }
 
-        void start_simulation(std::string map);
+        void simulate(std::string map);
 
         int  update_round() { return round++; } // returns the current round and adds 1 to it.
         void reset_round() { round = 0; }

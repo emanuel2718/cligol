@@ -21,7 +21,7 @@ void print_menu() {
 std::string get_filename(int option) {
     int index = 0;
     switch (option) {
-        case 48 ... 50:
+        case 48 ... 51:
             index = static_cast<int> (option - '0'); // convert to number
             break;
 

@@ -19,7 +19,8 @@ enum class SCREEN_TYPE {
 static const std::vector<std::string> MAPS{
     "maps/explosion.txt",
     "maps/gun.txt",
-    "maps/spaceship.txt"
+    "maps/spaceship.txt",
+    "maps/snake.txt"
 };
 
 struct Line {
@@ -34,7 +35,8 @@ static const std::vector<Line> main_menu_msg = {
     {8, 0, "Please, choose a initial map. Press ESC or q to quit."},
     {12, -1, "0. Explosion map"},
     {14, -4, "1. Gun map"},
-    {16, -1, "2. Spaceship map"}
+    {16, -1, "2. Spaceship map"},
+    {18, -3, "3. Snake map"},
 };
 
 int get_random_col();
