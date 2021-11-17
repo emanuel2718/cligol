@@ -18,6 +18,9 @@ class GameOfLife {
         std::vector<std::vector<char>>& get_board() { return board; }
 
         void start_simulation(std::string map);
+
+        int  update_round() { return round++; } // returns the current round and adds 1 to it.
+        void reset_round() { round = 0; }
         void print_board();
         void populate_board();
         void update_board();
@@ -28,6 +31,7 @@ class GameOfLife {
         static const char DEAD_CELL = '.';
         std::string map;
         std::vector<std::vector<char>> board;
+        int round = 0;
 };
 
 

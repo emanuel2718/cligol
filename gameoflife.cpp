@@ -10,6 +10,7 @@
 
 void GameOfLife::start_simulation(std::string map) {
     set_map(map);
+    reset_round();
     populate_board();
     bool running = true;
     //int ascii_code = 0;
@@ -36,7 +37,7 @@ void GameOfLife::start_simulation(std::string map) {
 
 void GameOfLife::print_board() {
     mvprintw(0, 0, "Screen Coordinates: (%d, %d)", LINES, COLS);
-
+    mvprintw(get_height()-1, 0, "Round: %d", update_round());
     refresh();
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {
