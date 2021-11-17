@@ -34,11 +34,15 @@ void GameOfLife::start_simulation(std::string map) {
     }
 }
 
-// TODO(emanuel): print centered somehow?
 void GameOfLife::print_board() {
+    mvprintw(0, 0, "Screen Coordinates: (%d, %d)", LINES, COLS);
+
+    refresh();
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {
-            mvaddch(i, j, board[i][j]);
+            mvaddch(i+get_height()/2 - board.size()/2,
+                    j+get_width()/2 - board[0].size()/2,
+                    board[i][j]);
         }
     }
 }
