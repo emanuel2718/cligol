@@ -11,7 +11,7 @@
 
 class GameOfLife {
     public:
-        GameOfLife() : board(COLUMNS, std::vector<char> (ROWS, '.')) {}
+        GameOfLife() : board(ROWS, std::vector<char> (COLUMNS, 'r')) {}
 
         void set_map(std::string m) { map = m; }
         std::string get_map() { return map; }

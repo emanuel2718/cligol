@@ -8,8 +8,8 @@
 #include <vector>
 
 
-static const int ROWS = 80;
-static const int COLUMNS = 20;
+static const int ROWS = 20;
+static const int COLUMNS = 79;
 
 enum class SCREEN_TYPE {
     MAIN_MENU,
@@ -39,13 +39,13 @@ static const std::vector<Line> main_menu_msg = {
     {18, -3, "3. Snake map"},
 };
 
-int get_random_col();
-int get_random_row();
+bool load_map();
 int get_width();
 int get_height();
 void print_menu();
+int get_random_col();
+int get_random_row();
 std::string get_filename(int);
-bool load_map();
 void print_centered(int y, int x, const char* str, int pad=0);
 
 
