@@ -9,7 +9,7 @@
 
 void GameOfLife::simulate(std::string map) {
     set_map(map);
-    reset_round();
+    reset_generation();
     populate_board();
 
     int ascii_code;
@@ -55,7 +55,7 @@ void GameOfLife::toogle_state() {
 
 void GameOfLife::render_simulation() {
     mvprintw(0, get_width()-10, "(%d, %d)", LINES, COLS);
-    mvprintw(get_height()-1, 0, "Round: %d", update_round());
+    mvprintw(get_height()-1, 0, "Generation #: %d", update_generation());
     mvprintw(0, 0, "Map: %s", get_map().c_str());
     mvprintw(2, 0, "ROWS: %d, COLS: %d", board.size(), board[0].size());
     mvprintw(get_height()-1, get_width()-15,

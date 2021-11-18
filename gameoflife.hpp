@@ -17,8 +17,8 @@ class GameOfLife {
 
         void simulate(std::string map);
 
-        int  update_round() { return round++; } // returns the current round and adds 1 to it.
-        void reset_round() { round = 0; }
+        int  update_generation() { return generation++; } // returns the current generation and adds 1 to it.
+        void reset_generation() { generation = 0; }
         void update_board();
         void populate_board();
         void render_simulation();
@@ -46,7 +46,7 @@ class GameOfLife {
 
         std::string map;
         std::vector<std::vector<char>> board;
-        int round = 0;
+        int generation = 0;
         State state = State::PAUSED; // start in paused state always
 };
 
