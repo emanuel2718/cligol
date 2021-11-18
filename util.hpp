@@ -9,7 +9,7 @@
 
 
 static const int ROWS = 20;
-static const int COLUMNS = 79;
+static const int COLUMNS = 80;
 
 // TODO: add speed times
 

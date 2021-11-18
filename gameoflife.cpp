@@ -12,6 +12,7 @@ void GameOfLife::simulate(std::string map) {
     set_map(map);
     reset_round();
     populate_board();
+    //nodelay(stdscr, TRUE);
 
     int ascii_code;
     bool running = true, delay = true;
@@ -22,6 +23,7 @@ void GameOfLife::simulate(std::string map) {
         update_board();
         refresh();
         ascii_code = getch();
+
         if (!delay) timeout(500);
         switch (ascii_code) {
             case 27: case 113: // ESC
@@ -32,6 +34,8 @@ void GameOfLife::simulate(std::string map) {
             case 98: // 'b' for back
                 running = false;
                 run();
+                break;
+            case 114:
                 break;
             case 112: // 'p' for pause
                 if (delay) {
@@ -45,7 +49,6 @@ void GameOfLife::simulate(std::string map) {
                 break;
             default:
                 break;
-
         }
     }
 }
@@ -75,11 +78,16 @@ void GameOfLife::render_simulation() {
 
 void GameOfLife::populate_board() {
     std::ifstream file;
+    std::ofstream debug_log("debug.txt");
     file.open(map);
     if (!file) return;
-    for (int i = 0; i <= ROWS; ++i)
-        for (int j = 0; j <= COLUMNS; ++j)
+    for (int i = 0; i < ROWS; ++i) {
+        for (int j = 0; j < COLUMNS; ++j) {
             file >> board[i][j];
+            debug_log << board[i][j];
+        }
+        debug_log << '\n';
+    }
     return;
 }
 
@@ -101,45 +109,93 @@ void GameOfLife::populate_board() {
     //0  1  2  3
 // [0, 0, 0, 0] size = 4, size-1 = 3
 void GameOfLife::update_board() {
+
+    // init temp board
+    std::vector<std::vector<char>> temp_board(ROWS, std::vector<char>(COLUMNS, '.'));
+
     int alive_count = 0; // number of neighbors alive
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {
             alive_count = 0;
 
             // top left
-            if (i != 0 && j != 0 && board[i-1][j-1] == LIVE_CELL) alive_count++;
+            if (i != 0 && j != 0 && board[i-1][j-1] == LIVE_CELL)
+                alive_count++;
 
             // top
-            if (i != 0 && board[i-1][j] == LIVE_CELL) alive_count++;
+            if (i != 0 && board[i-1][j] == LIVE_CELL)
+                alive_count++;
 
             // top right
-            if (i != 0 && j < board.size()-1 && board[i-1][j+1] == LIVE_CELL) alive_count++;
+            if (i != 0 && j < board[0].size()-1 && board[i-1][j+1] == LIVE_CELL)
+                alive_count++;
 
             // left
-            if (j != 0 && board[i][j-1] == LIVE_CELL) alive_count++;
+            if (j != 0 && board[i][j-1] == LIVE_CELL)
+                alive_count++;
 
             // right
-            if (j < board[0].size() && board[i][j+1] == LIVE_CELL) alive_count++;
+            if (j < board[0].size()-1 && board[i][j+1])
+                alive_count++;
 
             // bottom left
-            if (j != 0 && i < board.size()-1 && board[i+1][j-1] == LIVE_CELL) alive_count++;
+            if (i < board.size()-1 && j != 0 && board[i+1][j-1] == LIVE_CELL)
+                alive_count++;
 
             // bottom
-            if (i < board.size()-1 && board[i+1][j] == LIVE_CELL) alive_count++;
+            if (i < board.size()-1 && board[i+1][j] == LIVE_CELL)
+                alive_count++;
 
             // bottom right
-            if (i < board.size()-1 && j < board[0].size()-1 && board[i+1][j+1] == LIVE_CELL) alive_count++;
+            if (i < board.size()-1 && j < board[0].size()-1 && board[i+1][j+1] == LIVE_CELL)
+                alive_count++;
 
+
+            /*
+                1. Any LIVE cell with fewer than two live neighbours DIES
+                2. Any LIVE cell with two or three live neighbours LIVES
+                3. Any LIVE cell with more than three live neighbours DIES
+                4. Any DEAD cell with exactly three live neighbours becomes a LIVE cell
+            */
+
+            // RULE 1
             if (board[i][j] == LIVE_CELL && alive_count < 2)
-                board[i][j] = DEAD_CELL;
-            else if (board[i][j] == LIVE_CELL && (alive_count == 2 || alive_count == 3))
-                board[i][j] = LIVE_CELL;
+                temp_board[i][j] = DEAD_CELL;
+
+            // RULE 2
+            //else if (board[i][j] == LIVE_CELL && alive_count == 2)
+            //    board[i][j] = LIVE_CELL;
+
+            //else if (board[i][j] == LIVE_CELL && alive_count == 3)
+            //    board[i][j] = LIVE_CELL;
+
+            // RULE 3
             else if (board[i][j] == LIVE_CELL && alive_count > 3)
-                board[i][j] = DEAD_CELL;
+                temp_board[i][j] = DEAD_CELL;
+
+            // RULE 4
             else if (board[i][j] == DEAD_CELL && alive_count == 3)
-                board[i][j] = LIVE_CELL;
+                temp_board[i][j] = LIVE_CELL;
+
+
+            //if (board[i][j] == LIVE_CELL && alive_count < 2)
+            //    board[i][j] = DEAD_CELL;
+
+            //else if (board[i][j] == DEAD_CELL && (alive_count == 2 || alive_count == 3))
+            //    board[i][j] = LIVE_CELL;
+
+            //else if (board[i][j] == LIVE_CELL && alive_count > 3)
+            //    board[i][j] = DEAD_CELL;
+
+            //else if (board[i][j] == DEAD_CELL && alive_count == 3)
+            //    board[i][j] = LIVE_CELL;
         }
     }
+
+    // Fill the the actual board
+    for (size_t i = 0; i < temp_board.size(); ++i)
+        for (size_t j = 0; j < temp_board[0].size(); ++j)
+            board[i][j] = temp_board[i][j];
 }
 
 

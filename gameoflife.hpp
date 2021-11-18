@@ -7,8 +7,6 @@
 #include "util.hpp"
 
 
-
-
 class GameOfLife {
     public:
         GameOfLife() : board(ROWS, std::vector<char> (COLUMNS, '.')) {}
