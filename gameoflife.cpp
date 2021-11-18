@@ -13,8 +13,8 @@ void GameOfLife::simulate(std::string map) {
     populate_board();
 
     int ascii_code;
-    bool running = true;
-    while (running) {
+    bool simulating = true;
+    while (simulating) {
         clear();
         render_simulation();
         refresh();
@@ -22,19 +22,19 @@ void GameOfLife::simulate(std::string map) {
         update_board();
         refresh();
 
-        if (delay_on) timeout(100);
+        if (get_state() == State::RUNNING) timeout(100);
         switch (ascii_code) {
             case 27: case 113: // ESC
-                running = false;
+                simulating = false;
                 endwin();
                 exit(0);
                 break;
             case 98: // 'b' for back
-                running = false;
+                simulating = false;
                 run();
                 break;
             case 112: // 'p' for pause
-                toogle_delay();
+                toogle_state();
                 break;
             default:
                 break;
@@ -42,13 +42,13 @@ void GameOfLife::simulate(std::string map) {
     }
 }
 
-void GameOfLife::toogle_delay() {
-    if (delay_on) {
-        set_delay(false);
+void GameOfLife::toogle_state() {
+    if (get_state() == State::RUNNING) {
+        set_state(State::PAUSED);
         nodelay(stdscr, FALSE);
     }
     else {
-        set_delay(true);
+        set_state(State::RUNNING);
         nodelay(stdscr, TRUE);
     }
 }
@@ -58,6 +58,8 @@ void GameOfLife::render_simulation() {
     mvprintw(get_height()-1, 0, "Round: %d", update_round());
     mvprintw(0, 0, "Map: %s", get_map().c_str());
     mvprintw(2, 0, "ROWS: %d, COLS: %d", board.size(), board[0].size());
+    mvprintw(get_height()-1, get_width()-15,
+             get_state() == State::RUNNING ? "State: Running" : "State: Paused");
     refresh();
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {

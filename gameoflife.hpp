@@ -22,15 +22,17 @@ class GameOfLife {
         void update_board();
         void populate_board();
         void render_simulation();
-        void toogle_delay();
+        void run();
 
         // NOTE: for the reset I need to grab the map code. Because
         //       if we try to reset the map using the current map is going to be
         //       already changed
-        //void reset_map(std::string map);
-        bool is_delay() { return delay_on; }
-        void set_delay(bool delay) { delay_on = delay; }
-        void run();
+
+        enum class State { RUNNING, PAUSED };
+        State get_state() { return state; }
+        void set_state(State st) { state = st; }
+        void toogle_state(); // toogles between State::RUNNING and State::PAUSED
+
 
     private:
         // the board only knows about these two chars
@@ -45,7 +47,7 @@ class GameOfLife {
         std::string map;
         std::vector<std::vector<char>> board;
         int round = 0;
-        bool delay_on = false; // basically control run or pause. Might change the name.
+        State state = State::PAUSED; // start in paused state always
 };
 
 
