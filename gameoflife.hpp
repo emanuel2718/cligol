@@ -11,7 +11,7 @@
 
 class GameOfLife {
     public:
-        GameOfLife() : board(ROWS, std::vector<char> (COLUMNS, 'r')) {}
+        GameOfLife() : board(ROWS, std::vector<char> (COLUMNS, '.')) {}
 
         void set_map(std::string m) { map = m; }
         std::string get_map() { return map; }
@@ -21,9 +21,10 @@ class GameOfLife {
 
         int  update_round() { return round++; } // returns the current round and adds 1 to it.
         void reset_round() { round = 0; }
-        void print_board();
-        void populate_board();
         void update_board();
+        void populate_board();
+        void render_simulation();
+        void set_delay(bool delay_on);
         void run();
 
     private:

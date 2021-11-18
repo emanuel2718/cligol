@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     // init ncurses
     initscr();
-    raw();
+    //raw();
     keypad(stdscr, TRUE);
     noecho();
     cbreak();

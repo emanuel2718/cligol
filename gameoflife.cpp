@@ -12,29 +12,52 @@ void GameOfLife::simulate(std::string map) {
     set_map(map);
     reset_round();
     populate_board();
-    //nodelay(stdscr, TRUE); // TODO: make delay optional
-    bool running = true;
+
+    int ascii_code;
+    bool running = true, delay = true;
     while (running) {
         clear();
+        render_simulation();
         refresh();
-        print_board();
         update_board();
         refresh();
-        //timeout(1000);
+        ascii_code = getch();
+        if (!delay) timeout(500);
+        switch (ascii_code) {
+            case 27: case 113: // ESC
+                running = false;
+                endwin();
+                exit(0);
+                break;
+            case 98: // 'b' for back
+                running = false;
+                run();
+                break;
+            case 112: // 'p' for pause
+                if (delay) {
+                    delay = false;
+                    set_delay(false);
+                }
+                else {
+                    delay = true;
+                    set_delay(true);
+                }
+                break;
+            default:
+                break;
 
-        if (getch() == 27) { // ESC
-            running = false;
-        }
-        else if (getch() == 98) { // b to go back
-            running = false;
-            // Are we leaking memory?
-            run();
-            return;
         }
     }
 }
 
-void GameOfLife::print_board() {
+void GameOfLife::set_delay(bool delay) {
+    if (delay)
+        nodelay(stdscr, FALSE);
+    else
+        nodelay(stdscr, TRUE);
+}
+
+void GameOfLife::render_simulation() {
     mvprintw(0, get_width()-10, "(%d, %d)", LINES, COLS);
     mvprintw(get_height()-1, 0, "Round: %d", update_round());
     mvprintw(0, 0, "Map: %s", get_map().c_str());

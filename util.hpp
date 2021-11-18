@@ -11,6 +11,8 @@
 static const int ROWS = 20;
 static const int COLUMNS = 79;
 
+// TODO: add speed times
+
 enum class SCREEN_TYPE {
     MAIN_MENU,
     GOL_SIMULATION

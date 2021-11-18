@@ -24,11 +24,6 @@ std::string get_filename(int option) {
         case 48 ... 51:
             index = static_cast<int> (option - '0'); // convert to number
             break;
-
-        // NOTE(emanuel): In case more than 10 maps get added
-        //case 97 ... 102:
-        //    index = static_cast<int> (option - '0') - 39; // to get 10 - 16
-        //    break;
         default: break;
     }
     return MAPS[index];
