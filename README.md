@@ -2,4 +2,7 @@
 
 # TODOLIST:
 
-- [ ] refactor the maps into a maps.hpp file with vectors of the map
+- [ ] add speed button
+- [ ] change the round reference ---> generation
+- [ ] add button info on screen instead of debug coordinates
+- [ ] add documentation to README
