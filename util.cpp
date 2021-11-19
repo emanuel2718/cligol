@@ -29,6 +29,7 @@ std::string get_filename(int option) {
     return MAPS[index];
 }
 
+
 int get_random_col() {
     std::random_device dev;
     std::mt19937 rng(dev());

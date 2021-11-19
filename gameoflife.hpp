@@ -13,7 +13,6 @@ class GameOfLife {
 
         void set_map(std::string m) { map = m; }
         std::string get_map() { return map; }
-        std::vector<std::vector<char>>& get_board() { return board; }
 
         void simulate(std::string map);
 
@@ -34,6 +33,11 @@ class GameOfLife {
         void toogle_state(); // toogles between State::RUNNING and State::PAUSED
 
 
+        int get_current_simulation_speed(); // Returns the timeout value (higher means slower)
+        int get_speed_index();
+        void increase_simulation_speed();
+        void decrease_simulation_speed();
+
     private:
         // the board only knows about these two chars
         static const char LIVE_CELL = 'X';
@@ -43,6 +47,12 @@ class GameOfLife {
         static const char RENDER_LIVE_CELL = 'X';
         // if the cell is a DEAD_CELL it will render as RENDER_DEAD_CELL in the screen
         static const char RENDER_DEAD_CELL = ' ';
+
+        // Simulation speeds: Higher values mean lower speeds (they are used as timeout(speed)).
+        const std::vector<int> SIMUL_SPEEDS{2000, 1000, 500, 100, 50, 20};
+
+        // Tracks the current speed index of SIMUL_SPEEDS
+        int current_speed_idx = 4;
 
         std::string map;
         std::vector<std::vector<char>> board;

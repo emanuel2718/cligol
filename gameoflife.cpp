@@ -22,7 +22,7 @@ void GameOfLife::simulate(std::string map) {
         update_board();
         refresh();
 
-        if (get_state() == State::RUNNING) timeout(100);
+        if (get_state() == State::RUNNING) timeout(get_current_simulation_speed());
         switch (ascii_code) {
             case 27: case 113: // ESC
                 simulating = false;
@@ -35,6 +35,12 @@ void GameOfLife::simulate(std::string map) {
                 break;
             case 112: // 'p' for pause
                 toogle_state();
+                break;
+            case 258: // DOWN Arrow for decreasing the speed
+                decrease_simulation_speed();
+                break;
+            case 259: // UP Arrow for increasing the speed
+                increase_simulation_speed();
                 break;
             default:
                 break;
@@ -54,12 +60,13 @@ void GameOfLife::toogle_state() {
 }
 
 void GameOfLife::render_simulation() {
-    mvprintw(0, get_width()-10, "(%d, %d)", LINES, COLS);
-    mvprintw(get_height()-1, 0, "Generation #: %d", update_generation());
-    mvprintw(0, 0, "Map: %s", get_map().c_str());
-    mvprintw(2, 0, "ROWS: %d, COLS: %d", board.size(), board[0].size());
+    // Current Generation
+    mvprintw(get_height()-1, 0, "Generation: %d", update_generation());
+    // Current simulation state; Running or Paused
     mvprintw(get_height()-1, get_width()-15,
              get_state() == State::RUNNING ? "State: Running" : "State: Paused");
+    // Current speed
+    mvprintw(0, 0, "Speed: %d",get_speed_index());
     refresh();
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {
@@ -158,6 +165,23 @@ void GameOfLife::update_board() {
             board[y][x] = temp_board[y][x];
 }
 
+int GameOfLife::get_speed_index() {
+    return this->current_speed_idx;
+}
+
+int GameOfLife::get_current_simulation_speed() {
+    return SIMUL_SPEEDS[this->current_speed_idx];
+}
+
+void GameOfLife::increase_simulation_speed() {
+    if ((size_t) this->current_speed_idx < SIMUL_SPEEDS.size()-1)
+        this->current_speed_idx++;
+}
+void GameOfLife::decrease_simulation_speed() {
+    if (this->current_speed_idx > 0)
+        this->current_speed_idx--;
+}
+
 void GameOfLife::run() {
     clear();
     int ascii_code = 0;
@@ -175,7 +199,9 @@ void GameOfLife::run() {
                 map = get_filename(ascii_code);
                 simulate(map);
                 break;
-            default: break;
+            default:
+                //mvprintw(4, 4, "Keycode: %d", ascii_code);
+                break;
         }
     }
 }
