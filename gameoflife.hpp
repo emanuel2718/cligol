@@ -16,7 +16,8 @@ class GameOfLife {
 
         void simulate(std::string map);
 
-        int  update_generation() { return generation++; } // returns the current generation and adds 1 to it.
+        int get_generation() { return generation; } // current generation
+        void update_generation() { generation++; }
         void reset_generation() { generation = 0; }
         void update_board();
         void populate_board();
