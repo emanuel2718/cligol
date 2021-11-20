@@ -22,13 +22,13 @@ https://user-images.githubusercontent.com/55965894/142735706-cdee3617-c2c2-4c66-
 
 # Useful keybinds:
 
-    * `ESC` : quit application
-    * `q`   : quit application
-    * `h`   : show keybind help menu
-    * `b`   : go back
-    * `p`   : toogle pause/play
-    * `UP`  : increase simulation speed
-    * `DOWN`: decreas
+* `ESC` : quit application
+* `q`   : quit application
+* `h`   : show keybind help menu
+* `b`   : go back
+* `p`   : toogle pause/play
+* `UP`  : increase simulation speed
+* `DOWN`: decreas
 
 
 
