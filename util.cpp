@@ -12,10 +12,16 @@ void print_centered(int y, int x, const char* str, int pad) {
     mvprintw(y/2, (x-strlen(str))/2 + pad, str);
 }
 
-void print_menu() {
-    for (auto& line : main_menu_msg) {
+void print_menu(MenuType m_type) {
+    clear();
+    auto menu_msg = menu_map.at(m_type);
+
+    for (auto& line : menu_msg) {
         print_centered(get_height()+line.mod, get_width(), line.message, line.pad);
     }
+
+    refresh();
+    if (m_type == MenuType::keybind_menu) getch(); // keybind menu persistence until keyevent
 }
 
 std::string get_filename(int option) {

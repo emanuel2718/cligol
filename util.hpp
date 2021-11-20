@@ -4,6 +4,7 @@
 
 #include <cstring>
 #include <string>
+#include <unordered_map>
 #include <iostream>
 #include <vector>
 
@@ -35,15 +36,34 @@ static const std::vector<Line> main_menu_msg = {
     {18, -3, "3. Snake map"},
 };
 
+static const std::vector<Line> keybinds_help_msg = {
+    {-8, 0, "Cligol keybind panel"},
+    {0, 0, "ESC        - Quit Cligol"},
+    {2, 0, "q          - Quit Cligol"},
+    {4, -2, "b          - go back"},
+    {6, 1, "h          - Show this page"},
+    {8, 2, "p          - Pause simulation"},
+    {10, 1, "UP arrow   - Increase speed"},
+    {12, 1, "DOWN arrow - Decrease speed"}
+};
+
+// Type of menu to be rendered on the screen
+enum class MenuType { main_menu, keybind_menu };
+
+// Maps the MenuType to it's corresponding screen text message
+static const std::unordered_map<MenuType, const std::vector<Line>> menu_map {
+    {MenuType::main_menu, main_menu_msg},
+    {MenuType::keybind_menu, keybinds_help_msg},
+};
 
 bool load_map();
 int get_width();
 int get_height();
-void print_menu();
+void print_menu(MenuType m_type); // will render the corresponding MenuType message on the screen
 int get_random_col();
 int get_random_row();
 
-std::string get_filename(int);
+std::string get_filename(int f);
 void print_centered(int y, int x, const char* str, int pad=0);
 
 

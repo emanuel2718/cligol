@@ -187,12 +187,23 @@ void GameOfLife::run() {
     int ascii_code = 0;
     bool show_menu = true;
     while (show_menu) {
-        print_menu();
+        //clear();
+
+        // always start new simulations in the paused state
+        set_state(State::PAUSED);
+        nodelay(stdscr, FALSE);
+
+        print_menu(MenuType::main_menu);
         ascii_code = getch();
         switch (ascii_code) {
             case 27:  show_menu = false; break; // ESC --> quit
             case 113: show_menu = false; break; // q   --> quit
             case 109: show_menu = false; break; // m   --> go to main menu
+            case 104: // h   --> show keybinds
+                print_menu(MenuType::keybind_menu);
+                //show_keybinds_screen();
+                break;
+
             //case 48 ... 55: case 97 ... 102: // [0, 9] or [a, f]
             case 48 ... 51: // [0, 3] for now
                 clear();
