@@ -22,7 +22,7 @@ static const std::vector<std::string> MAPS{
 
 struct Line {
     int mod; // vertical modifier for message (y) position (+y = downwards direction)
-    int pad; // horizontal pad for message centering purposes
+    int pad; // horizontal pad for message centering purposes (+x right pad, -x left pad)
     const char* message;
 };
 
