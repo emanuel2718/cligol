@@ -22,7 +22,7 @@ void GameOfLife::simulate(std::string map) {
         //update_board();
         //refresh();
 
-        if (get_state() == State::RUNNING) timeout(get_current_simulation_speed());
+        if (get_state() == State::running) timeout(get_current_simulation_speed());
         switch (ascii_code) {
             case 27: case 113: // ESC
                 simulating = false;
@@ -51,12 +51,12 @@ void GameOfLife::simulate(std::string map) {
 }
 
 void GameOfLife::toogle_state() {
-    if (get_state() == State::RUNNING) {
-        set_state(State::PAUSED);
+    if (get_state() == State::running) {
+        set_state(State::paused);
         nodelay(stdscr, FALSE);
     }
     else {
-        set_state(State::RUNNING);
+        set_state(State::running);
         nodelay(stdscr, TRUE);
     }
 }
@@ -66,7 +66,7 @@ void GameOfLife::render_simulation() {
     mvprintw(get_height()-1, 0, "Generation: %d", get_generation());
     // Current simulation state; Running or Paused
     mvprintw(get_height()-1, get_width()-15,
-             get_state() == State::RUNNING ? "State: Running" : "State: Paused");
+             get_state() == State::running ? "State: Running" : "State: Paused");
     // Current speed
     // +1 to avoid having 0 as speed when the speed index is 0 which means the lowest speed
     mvprintw(0, 0, "Speed: %d",get_speed_index()+1);
@@ -194,7 +194,7 @@ void GameOfLife::run() {
         //clear();
 
         // always start new simulations in the paused state
-        set_state(State::PAUSED);
+        set_state(State::paused);
         nodelay(stdscr, FALSE);
 
         print_menu(MenuType::main_menu);

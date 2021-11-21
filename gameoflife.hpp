@@ -28,10 +28,10 @@ class GameOfLife {
         //       if we try to reset the map using the current map is going to be
         //       already changed
 
-        enum class State { RUNNING, PAUSED };
+        enum class State { running, paused };
         State get_state() { return state; }
         void set_state(State st) { state = st; }
-        void toogle_state(); // toogles between State::RUNNING and State::PAUSED
+        void toogle_state(); // toogles between State::running and State::paused
 
 
         int get_current_simulation_speed(); // Returns the timeout value (higher means slower)
@@ -58,7 +58,7 @@ class GameOfLife {
         std::string map;
         std::vector<std::vector<char>> board;
         int generation = 0;
-        State state = State::PAUSED; // start in paused state always
+        State state = State::paused; // start in paused state always
 };
 
 
