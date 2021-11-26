@@ -5,3 +5,5 @@ tmp/
 cligol
 debug.txt
 valgrind-*
+build/*
+

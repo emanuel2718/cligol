@@ -73,16 +73,23 @@ void GameOfLife::render_simulation() {
     refresh();
     for (size_t i = 0; i < board.size(); ++i) {
         for (size_t j = 0; j < board[0].size(); ++j) {
-            if (board[i][j] == LIVE_CELL)
+            if (board[i][j] == LIVE_CELL) {
                 mvaddch(i+get_height()/2 - board.size()/2,
                         j+get_width()/2 - board[0].size()/2,
                         RENDER_LIVE_CELL);
-            else
+                refresh();
+
+            }
+            else {
                 mvaddch(i+get_height()/2 - board.size()/2,
                         j+get_width()/2 - board[0].size()/2,
                         RENDER_DEAD_CELL);
+                refresh();
+
+            }
         }
     }
+    refresh();
 }
 
 
