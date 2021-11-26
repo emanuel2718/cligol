@@ -12,7 +12,9 @@ Simple Conway's Game of Life (cli edition) simulation using C++ with ncurses.
 ``` sh
 git clone https://github.com/emanuel2718/cligol.git
 cd cligol/
-make -k && ./cligol
+mkdir build/ && cd build
+cmake ..
+make && ../bin/cligol
 ```
 
 # Preview:
@@ -34,13 +36,12 @@ https://user-images.githubusercontent.com/55965894/142735706-cdee3617-c2c2-4c66-
 
 # TODOLIST:
 
-- [ ] add documentation to README
-- [ ] refactor enum classes to camelCase and values to NON-CAPS (avoid conflict with macros)
 - [ ] refactor the way map handling works completely
 - [ ] maybe make a map generator
 - [ ] make the keybind menu work in the running simulation?
-- [ ] add button info on screen instead of debug coordinates
 - [x] add speed button
 - [x] change the round reference ---> generation
 - [x] add +1 to speed number so that 1 is the lowest speed
 - [x] if simulation is paused; changing speeds triggers generation update
+- [x] add documentation to README
+- [x] refactor enum classes to camelCase and values to NON-CAPS (avoid conflict with macros)
