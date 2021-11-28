@@ -9,17 +9,27 @@ Simple Conway's Game of Life (cli edition) simulation using C++ with ncurses.
 
 # How to run:
 
+
+### Clone repository
+
 ``` sh
 git clone https://github.com/emanuel2718/cligol.git
 cd cligol/
+```
+
+### Build cligol
+
+``` sh
 mkdir build/ && cd build
 cmake ..
+```
+
+### Run cligol
+
+``` sh
 make && ../bin/cligol
 ```
 
-# Preview:
-
-https://user-images.githubusercontent.com/55965894/142735706-cdee3617-c2c2-4c66-8025-8f4aab44cace.mp4
 
 
 # Useful keybinds:
@@ -30,12 +40,13 @@ https://user-images.githubusercontent.com/55965894/142735706-cdee3617-c2c2-4c66-
 * `b`   : go back
 * `p`   : toogle pause/play
 * `UP`  : increase simulation speed
-* `DOWN`: decreas
+* `DOWN`: decrease simulation speed
 
 
 
 # TODOLIST:
 
+- [ ] add simulation preview
 - [ ] refactor the way map handling works completely
 - [ ] maybe make a map generator
 - [ ] make the keybind menu work in the running simulation?
